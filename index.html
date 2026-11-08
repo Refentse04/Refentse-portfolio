@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Refentse Motebejane | Portfolio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. THEME TOKENS & RESET
+   ============================================================ */
+:root {
+  /* Light Mode */
+  --bg: #faf9f6;
+  --text: #1a1a1a;
+  --text-muted: #555555;
+  --border: #e0e0e0;
+  --card-bg: #ffffff;
+  --accent: #d4af37; /* Gold accent */
+  --btn-bg: #1a1a1a;
+  --btn-text: #ffffff;
+  --header-bg: rgba(250, 249, 246, 0.95);
+  --input-bg: #f0f0f0;
+  --footer-bg: #111111;
+  --footer-text: #a0a0a0;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode */
+  --bg: #121212;
+  --text: #f0f0f0;
+  --text-muted: #a0a0a0;
+  --border: #333333;
+  --card-bg: #1e1e1e;
+  --accent: #d4af37;
+  --btn-bg: #d4af37;
+  --btn-text: #1a1a1a;
+  --header-bg: rgba(18, 18, 18, 0.95);
+  --input-bg: #2a2a2a;
+  --footer-bg: #050505;
+  --footer-text: #888888;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background-color 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ============================================================
+   2. STICKY HEADER & NAVIGATION HOVER EFFECT
+   ============================================================ */
+.sticky-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: var(--header-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  z-index: 1000;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.header-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+}
+
+/* Navigation Loading Bar Hover Effect */
+.nav-links a {
+  position: relative;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.3s;
+  padding-bottom: 6px;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.3s;
+}
+
+.theme-toggle:hover { border-color: var(--accent); }
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* ============================================================
+   3. MAIN LAYOUT & SCROLL REVEAL ANIMATIONS
+   ============================================================ */
+.main-content {
+  padding: 120px 5% 60px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-of-type { border-bottom: none; }
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* Scroll Reveal Classes */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   4. HERO SECTION
+   ============================================================ */
+.hero-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  min-height: 70vh;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.greeting {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 15px;
+  display: block;
+  font-weight: 600;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.hero-title span { display: block; }
+
+.hero-copy {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin-bottom: 30px;
+}
+
+/* Buttons */
+.btn-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  padding: 14px 28px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+  opacity: 0.9;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hero-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile-image {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  object-fit: cover;
+  opacity: 0;
+  transform: translateX(60px);
+  animation: slideInRight 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.2s;
+}
+
+@keyframes slideInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================
+   5. SKILLS, PROJECTS & LANGUAGES
+   ============================================================ */
+.skills-grid, .lang-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.skill-tag, .lang-tag {
+  padding: 8px 16px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  font-size: 0.85rem;
+  color: var(--text);
+  transition: border-color 0.2s, transform 0.2s;
+}
+.skill-tag:hover, .lang-tag:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.sub-heading {
+  font-size: 1.2rem;
+  font-family: 'Playfair Display', serif;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+/* Projects Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+.project-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 25px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+  border-color: var(--accent);
+}
+.project-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.project-card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+.project-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  flex-grow: 1; /* Pushes tech tags to the bottom */
+}
+
+/* ============================================================
+   6. EXPERIENCE & EDUCATION TIMELINE
+   ============================================================ */
+.timeline-item {
+  margin-bottom: 30px;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-date {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.timeline-org {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  font-style: italic;
+}
+.timeline-item p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   7. CERTIFICATIONS
+   ============================================================ */
+.cert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cert-card {
+  background-color: var(--card-bg);
+  padding: 24px;
+  border-left: 4px solid var(--accent);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  border-radius: 0 8px 8px 0;
+  transition: transform 0.3s ease;
+}
+.cert-card:hover {
+  transform: translateX(10px);
+}
+.cert-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+.cert-desc ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-top: 8px;
+}
+.cert-desc li { margin-bottom: 4px; }
+
+/* ============================================================
+   8. CONTACT FORM (Formspree)
+   ============================================================ */
+.contact-container {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.contact-info {
+  flex: 1;
+  min-width: 300px;
+}
+.contact-form {
+  flex: 1;
+  min-width: 300px;
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background-color: var(--input-bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* ============================================================
+   9. FOOTER
+   ============================================================ */
+.site-footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  padding: 60px 5% 30px 5%;
+  border-top: 1px solid var(--border);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.footer-brand .brand-top {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.footer-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+.footer-brand h4 {
+  color: #ffffff;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.footer-brand p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  max-width: 350px;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  color: #ffffff;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.footer-links ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  font-size: 0.9rem;
+  transition: color 0.3s;
+  display: inline-block;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+.footer-contact p {
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.footer-contact a {
+  color: #ffffff;
+  transition: color 0.3s;
+}
+
+.footer-contact a:hover {
+  color: var(--accent);
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+  background-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.social-icons svg {
+  fill: #ffffff;
+  width: 20px;
+  height: 20px;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   10. RESPONSIVE DESIGN
+   ============================================================ */
+@media (max-width: 992px) {
+  .hero-layout {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 30px;
+  }
+  .hero-copy { margin: 0 auto 30px auto; }
+  .hero-image-container { justify-content: center; }
+  .profile-image { max-width: 350px; }
+  .contact-container { flex-direction: column; }
+  .btn-group { justify-content: center; }
+  
+  .nav-links {
+    display: none;
+  }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background-color: var(--header-bg);
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+  }
+  .mobile-menu-btn { display: block; }
+  
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+  .footer-brand { align-items: center; }
+  .footer-brand .brand-top { flex-direction: column; }
+  .footer-brand p { margin: 0 auto; }
+  .social-icons { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<header class="sticky-header">
+  <div class="header-brand">
+    <img src="https://i.postimg.cc/76FMGXsD/refentse.jpg" alt="Refentse" class="header-avatar">
+    Refentse Motebejane
+  </div>
+  
+  <nav class="nav-links" id="navLinks">
+    <a href="#home">Home</a>
+    <a href="#about">Who Am I?</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#certificates">Certifications</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div style="display: flex; gap: 15px; align-items: center;">
+    <button class="theme-toggle" id="themeToggle">
+      <span id="themeIcon">☀</span> <span id="themeText">Light Mode</span>
+    </button>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+  <!-- INTRODUCTION / HOME -->
+  <section id="home" class="section">
+    <div class="hero-layout">
+      <div class="hero-text reveal">
+        <span class="greeting">Hello, I'm Refentse</span>
+        <h1 class="hero-title">
+          <span>Refentse</span>
+          <span>Motebejane</span>
+          <span style="font-style: italic; font-weight: 600; font-size: 0.6em; color: var(--accent); margin-top: 10px;">— Software Developer</span>
+        </h1>
+        <p class="hero-copy">
+          An aspiring Software Developer and technology enthusiast with a passion for innovation and digital transformation. 
+          I am currently in my third year of a Diploma in Information Technology at Nelson Mandela University.
+        </p>
+        <div class="btn-group">
+          <a href="#contact" class="btn">Let's Connect</a>
+          <!-- UPDATED CV LINK HERE -->
+          <a href="https://drive.google.com/uc?export=download&id=1Rkkebv_016fzDpJQF-2Gm1JxmBfqmrTS" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Download CV</a>
+        </div>
+      </div>
+      
+      <div class="hero-image-container">
+        <img src="https://i.postimg.cc/76FMGXsD/refentse.jpg" alt="Refentse Motebejane" class="profile-image">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / WHO AM I? -->
+  <section id="about" class="section reveal">
+    <h2>Who Am I?</h2>
+    <p style="color: var(--text-muted); max-width: 800px; font-size: 1.05rem; margin-bottom: 20px;">
+      My name is Refentse Manale Motebejane, an aspiring Software Developer and problem-solver with a passion for innovation. I am currently a third-year Information Technology student at Nelson Mandela University, with a keen interest in software development, web technologies, and database management.
+    </p>
+    <p style="color: var(--text-muted); max-width: 800px; font-size: 1.05rem;">
+      Beyond the classroom, I enjoy turning ideas into practical digital solutions. Through academic projects and workplace exposure at SoundFusionMedia, I have developed skills in networking, web development, and database management. I consider myself curious, adaptable, and growth-oriented, believing that technology is about identifying problems and developing solutions that make a meaningful difference.
+    </p>
+  </section>
+
+  <!-- EDUCATION / MY ACADEMIC JOURNEY -->
+  <section id="education" class="section reveal">
+    <h2>My Academic Journey</h2>
+    
+    <div class="timeline-item">
+      <div class="timeline-date">Feb 2025 – Expected Nov 2027</div>
+      <h3>Diploma in Information Technology (Software Development)</h3>
+      <div class="timeline-org">Nelson Mandela University | NQF Level 6</div>
+      <p>
+        Focus Areas: C# (.NET Framework), ASP.NET Framework, SQL database fundamentals, web technologies, ADO.NET, React.js. 
+        Active participation in student leadership, team coordination, and peer support.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Matriculated 2024</div>
+      <h3>National Senior Certificate (Bachelor's Pass)</h3>
+      <div class="timeline-org">St. Matthews Private Secondary School</div>
+    </div>
+  </section>
+
+  <!-- SKILLS / TECHNICAL SKILLS -->
+  <section id="skills" class="section reveal">
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+      <span class="skill-tag">C#</span>
+      <span class="skill-tag">SQL Server</span>
+      <span class="skill-tag">HTML & CSS</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">.NET Framework</span>
+      <span class="skill-tag">ASP.NET Core</span>
+      <span class="skill-tag">Entity Framework Core</span>
+      <span class="skill-tag">ADO.NET</span>
+      <span class="skill-tag">RESTful Web APIs</span>
+      <span class="skill-tag">Object-Oriented Programming (OOP)</span>
+      <span class="skill-tag">Windows Forms</span>
+      <span class="skill-tag">React.js</span>
+      <span class="skill-tag">Bootstrap</span>
+      <span class="skill-tag">jQuery</span>
+      <span class="skill-tag">Cisco IT Essentials</span>
+      <span class="skill-tag">Network Basics</span>
+    </div>
+
+    <h3 class="sub-heading">Languages Spoken</h3>
+    <div class="lang-grid">
+      <span class="lang-tag">English</span>
+      <span class="lang-tag">isiZulu</span>
+      <span class="lang-tag">isiXhosa</span>
+      <span class="lang-tag">Sesotho</span>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE / PROFESSIONAL EXPERIENCE -->
+  <section id="experience" class="section reveal">
+    <h2>Professional Experience</h2>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Aug 2026 – Present</div>
+      <h3>Cybersecurity Intern</h3>
+      <div class="timeline-org">Digital Ubuntu: Cybersecurity/AI Programme (Funded by Google.org)</div>
+      <p>
+        Selected for a structured cybersecurity and artificial intelligence development programme. 
+        Developing foundational knowledge in digital risk and responsible technology use, and preparing 
+        to present to LCOs on cybercrime awareness.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Feb 2026 – Nov 2026</div>
+      <h3>Student Leader — House Committee, Mentor & Res Community Watch</h3>
+      <div class="timeline-org">Hector Pieterson Residence, Nelson Mandela University</div>
+      <p>
+        Foster a supportive and inclusive environment for resident students. Organise campus sports 
+        fixtures, assist with student onboarding, and manage event logistics, developing strong 
+        communication and group problem-solving capabilities.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Nov 2025 – Dec 2025</div>
+      <h3>Stock Controller</h3>
+      <div class="timeline-org">Soundfusion</div>
+      <p>
+        Managed seasonal stock inventory and tracked equipment movement. Maintained accurate records 
+        and communicated effectively with management and operational teams during peak demand.
+      </p>
+    </div>
+  </section>
+
+  <!-- PROJECTS / THINGS I'VE BUILT -->
+  <section id="projects" class="section reveal">
+    <h2>Things I've Built</h2>
+    
+    <div class="projects-grid">
+      <!-- Project 1: Res Ticket System -->
+      <div class="project-card">
+        <img src="https://i.postimg.cc/BX3JjWDg/Screenshot-2026-10-21-025035.png" alt="Hector Pieterson Room List System" class="project-image">
+        <h3>Res Ticket System</h3>
+        <p>
+          A digital room list and reporting system built for Hector Pieterson Residence. Designed specifically for 
+          Unit Leaders and Admins, the system allows leaders to securely capture, manage, and verify student details 
+          when they check in. Features role-based access control, digital signature capture, and automated PDF/Excel 
+          reporting for seamless residence management.
+        </p>
+        <div class="skills-grid" style="margin-bottom: 0;">
+          <span class="skill-tag" style="font-size: 0.75rem; padding: 4px 10px;">HTML/CSS</span>
+          <span class="skill-tag" style="font-size: 0.75rem; padding: 4px 10px;">JavaScript</span>
+          <span class="skill-tag" style="font-size: 0.75rem; padding: 4px 10px;">jsPDF</span>
+          <span class="skill-tag" style="font-size: 0.75rem; padding: 4px 10px;">LocalStorage</span>
+        </div>
+      </div>
+
+      <!-- Project 2: Eyelash Artist Website -->
+      <div class="project-card">
+        <img src="https://i.postimg.cc/ykK7Dq9G/Screenshot-2026-10-21-025222.png" alt="GoddessGlanceTshepi Website" class="project-image">
+        <h3>Eyelash Artist Website</h3>
+        <p>
+          A fully responsive, elegant website built for a beauty professional. Includes an interactive portfolio gallery with 
+          category filtering, a dynamic pricing menu, and a dual booking system using both Formspree email integration and 
+          an instant WhatsApp booking API.
+        </p>
+        <div class="skills-grid" style="margin-bottom: 0;">
+          <span class="skill-tag" style="font-size: 0.75rem; padding: 4px 10px;">HTML/CSS</span>
+          <span class="skill-tag" style="font-size: 0.75rem; padding: 4px 10px;">JavaScript</span>
+          <span class="skill-tag" style="font-size: 0.75rem; padding: 4px 10px;">Formspree API</span>
+          <span class="skill-tag" style="font-size: 0.75rem; padding: 4px 10px;">WhatsApp API</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certificates" class="section reveal">
+    <h2>Certifications & Achievements</h2>
+    <div class="cert-list">
+
+      <div class="cert-card">
+        <h3>ResLife & Student Development Recognition Certificate</h3>
+        <div class="cert-desc" style="margin-top: 10px;">
+          <p>Awarded by Nelson Mandela University for exceptional dedication and service as a Student Leader.</p>
+          <ul>
+            <li>Recognized for fostering a supportive and structured environment within the Hector Pieterson Residence.</li>
+            <li>Honored for outstanding contribution to student development, peer mentoring, and community watch initiatives.</li>
+            <li>Demonstrated excellence in event coordination and team leadership.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <h3>Digital Ubuntu Programme</h3>
+        <div class="cert-desc">
+          <p>Supported by Google.org. Focused on advanced cybersecurity and AI seminars, preparing for community-organisation internship placements.</p>
+          <ul>
+            <li>Cybersecurity Awareness and Digital Risk Management.</li>
+            <li>Responsible Technology Use and AI Fundamentals.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <h3>Cisco IT Essentials</h3>
+        <div class="cert-desc">
+          <p>Comprehensive certification covering computer hardware maintenance, operating systems, networking basics, and security best practices.</p>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <h3>Cisco Introduction to Networks</h3>
+        <div class="cert-desc">
+          <p>Foundational networking certification covering IP addressing, routing protocols, network topologies, and the OSI model.</p>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <h3>Nelson Mandela University: Cybersecurity (Level One)</h3>
+        <div class="cert-desc">
+          <p>University-level certification validating core competencies in threat detection, data protection, and secure digital practices.</p>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <h3>HP Online Certification: AI for Beginners</h3>
+        <div class="cert-desc">
+          <p>Introduction to artificial intelligence, machine learning concepts, and the ethical implications of AI technologies.</p>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <h3>HP Online Certification: Data Science & Analytics</h3>
+        <div class="cert-desc">
+          <p>Fundamental training in data analysis, visualisation, and the role of data in driving business decisions.</p>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <h3>Viro Certification: Introduction to Cybersecurity</h3>
+        <div class="cert-desc">
+          <p>Entry-level certification covering the basic principles of securing networks, devices, and data.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT / LET'S CONNECT -->
+  <section id="contact" class="section reveal">
+    <h2>Let's Connect</h2>
+    
+    <div class="contact-container">
+      <div class="contact-info">
+        <p style="color: var(--text-muted); margin-bottom: 20px;">
+          I am open to internship opportunities, junior developer roles, and collaborative projects. 
+          Feel free to reach out via the form or my direct contact details below.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+          <p><strong>Email:</strong> <a href="mailto:refentsemotejejane23@gmail.com" style="color: var(--accent);">refentsemotejejane23@gmail.com</a></p>
+          <p><strong>Phone:</strong> <a href="tel:+27786226699" style="color: var(--accent);">078 622 6699</a></p>
+          <p><strong>Study Address:</strong> North Campus, Summerstrand, Gqeberha, Eastern Cape</p>
+          <p><strong>Home Address:</strong> 13 Slate Avenue, Creswell Park, Roodepoort, Johannesburg, 1724</p>
+          <p><strong>Driver's Licence:</strong> Valid Code 10 (C1)</p>
+          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/refentse-motebejane-806310259/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">View Profile</a></p>
+        </div>
+      </div>
+
+      <form action="https://formspree.io/f/mljjkabd" method="POST" class="contact-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" required placeholder="john@example.com">
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="How can I help you?"></textarea>
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="brand-top">
+        <img src="https://i.postimg.cc/76FMGXsD/refentse.jpg" alt="Refentse" class="footer-avatar">
+        <h4>Refentse Motebejane</h4>
+      </div>
+      <p>
+        Aspiring Software Developer and technology enthusiast. Passionate about creating 
+        efficient, user-friendly digital solutions and continuously learning new technologies.
+      </p>
+    </div>
+    
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">Who Am I?</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certificates">Certifications</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-contact">
+      <h4>Connect</h4>
+      <p><a href="mailto:refentsemotebejane23@gmail.com">refentsemotebejane23@gmail.com</a></p>
+      <p><a href="tel:+27786226699">078 622 6699</a></p>
+      
+      <!-- LinkedIn Icon -->
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/refentse-motebejane-806310259/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; 2026 Refentse Motebejane. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   1. THEME TOGGLE LOGIC
+   ============================================================ */
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeText = document.getElementById('themeText');
+const htmlElement = document.documentElement;
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  htmlElement.setAttribute('data-theme', savedTheme);
+  updateThemeUI(savedTheme);
+}
+
+themeToggle.addEventListener('click', () => {
+  const currentTheme = htmlElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  
+  htmlElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  updateThemeUI(newTheme);
+});
+
+function updateThemeUI(theme) {
+  if (theme === 'dark') {
+    themeIcon.textContent = '☾';
+    themeText.textContent = 'Dark Mode';
+  } else {
+    themeIcon.textContent = '☀';
+    themeText.textContent = 'Light Mode';
+  }
+}
+
+/* ============================================================
+   2. MOBILE MENU LOGIC
+   ============================================================ */
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const navLinks = document.getElementById('navLinks');
+
+mobileMenuBtn.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+  });
+});
+
+/* ============================================================
+   3. SCROLL REVEAL ANIMATIONS (Intersection Observer)
+   ============================================================ */
+const revealElements = document.querySelectorAll('.reveal');
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  root: null,
+  threshold: 0.15,
+  rootMargin: "0px 0px -50px 0px"
+});
+
+revealElements.forEach(el => revealObserver.observe(el));
+</script>
+
+</body>
+</html>
